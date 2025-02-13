@@ -61,6 +61,17 @@ export class DataElement extends ObjectNode {
     }
     return null;
   }
+  
+  getElementsByRegExp(re: RegExp): DataElement[] {
+    let children: DataElement[] = [];
+    for (let child of this.children) {
+      if (child instanceof DataElement) {
+        if (re.test(child.getAttribute('name'))) children.push(child);
+        Array.prototype.push.apply(children, child.getElementsByRegExp(re));
+      }
+    }
+    return children;
+  }
 
   get myIdentifer(){
     let self: GameObject = <GameObject> this;
