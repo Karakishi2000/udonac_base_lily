@@ -531,15 +531,20 @@ export class GameCharacter extends TabletopObject {
     const data = this.detailDataElement.getFirstElementByName(name);
     if(!data)return false;
     if(data.type == 'numberResource'){ return true;}
+    if(data.type == 'lineResource'){ return true;}
     if(data.type == ''){ return true;}
     if(data.type == 'note'){ return true;}
     return false;
   }
 
-  chkChangeStatus(name: string, nowOrMax: string): boolean{
+  chkChangeStatus(name: string, nowOrMax: string, isLine ?: boolean): boolean{
     const data = this.detailDataElement.getFirstElementByName(name);
     if(!data)return false;
     if(data.type == 'numberResource'){
+      if((nowOrMax == 'now' || nowOrMax =='max') && !isLine){
+        return true;
+      }
+    }else if(data.type == 'lineResource'){
       if(nowOrMax == 'now' || nowOrMax =='max'){
         return true;
       }
@@ -555,19 +560,35 @@ export class GameCharacter extends TabletopObject {
     return false;
   }
 
-  getStatusType(name: string, nowOrMax: string): string{
+  getStatusType(name: string, nowOrMax: string, isLine ?: boolean): string{
     let type = '';
     const data = this.detailDataElement.getFirstElementByName(name);
     if(!data)return null;
     
     if(data.type == 'numberResource'){
-      if(nowOrMax == 'now'){
+      if(nowOrMax == 'now' && !isLine){
         type = 'currentValue';
-      }else if(nowOrMax == 'max'){
+      }else if(nowOrMax == 'max' && !isLine){
         type = 'value';
+      }else{
+        return null;
+      }
+    }else if(data.type == 'lineResource'){
+      if(isLine){
+        if(nowOrMax == 'now'){
+          type = 'currentLineValue';
+        }else if(nowOrMax == 'max'){
+          type = 'maxLineValue';
+        }
+      }else{
+        if(nowOrMax == 'now'){
+          type = 'currentValue';
+        }else if(nowOrMax == 'max'){
+          type = 'value';
+        }
       }
     }else if(data.type == ''){
-      if(nowOrMax == 'now'){
+      if(nowOrMax == 'now' && !isLine){
         type = 'value';
       }else{
         return null;
@@ -591,10 +612,10 @@ export class GameCharacter extends TabletopObject {
     return type;
   }
 
-  getStatusValue(name: string, nowOrMax: string): number{
+  getStatusValue(name: string, nowOrMax: string, isLine ?: boolean): number{
     const data = this.detailDataElement.getFirstElementByName(name);
     if(!data)return null;
-    let type = this.getStatusType(name, nowOrMax);
+    let type = this.getStatusType(name, nowOrMax, isLine);
     if(type == null) return null;
 
     let oldNumS = '';
@@ -608,13 +629,19 @@ export class GameCharacter extends TabletopObject {
     if ( type == 'currentValue'){
       oldNumS = (data.currentValue as string);
     }
+    if ( type == 'maxLineValue') {
+      oldNumS = String(data.maxLineValue);
+    }
+    if ( type == 'currentLineValue'){
+      oldNumS = String(data.currentLineValue);
+    }
     return parseInt(oldNumS);
   }
 
-  setStatusValue(name: string, nowOrMax: string, setValue: number): boolean{
+  setStatusValue(name: string, nowOrMax: string, setValue: number, isLine ?: boolean): boolean{
     const data = this.detailDataElement.getFirstElementByName(name);
     if(!data)return false;
-    let type = this.getStatusType(name, nowOrMax);
+    let type = this.getStatusType(name, nowOrMax, isLine);
     if(type == null) return false;
 
     if ( type == 'value') {
@@ -622,6 +649,12 @@ export class GameCharacter extends TabletopObject {
     }
     if ( type == 'currentValue'){
       data.currentValue = setValue;
+    }
+    if ( type == 'currentLineValue'){
+      data.currentLineValue = setValue;
+    }
+    if ( type == 'maxLineValue') {
+      data.maxLineValue = setValue;
     }
     return true;
   }
@@ -641,14 +674,14 @@ export class GameCharacter extends TabletopObject {
   }
 
 
-  changeStatusValue(name: string, nowOrMax: string, addValue: number, limitMin ?: boolean ,limitMax ?: boolean ): string{
+  changeStatusValue(name: string, nowOrMax: string, addValue: number, limitMin ?: boolean ,limitMax ?: boolean, isLine ?: boolean ): string{
     const data = this.detailDataElement.getFirstElementByName(name);
     let text = '';
-    let type = this.getStatusType(name, nowOrMax);
+    let type = this.getStatusType(name, nowOrMax, isLine);
     if(!data)return text;
 
     let newNum: number;
-    let oldNum :number = this.getStatusValue(name,nowOrMax);
+    let oldNum :number = this.getStatusValue(name,nowOrMax,isLine);
     if(oldNum == null) return text;
     let sum = oldNum + addValue;
 
@@ -670,6 +703,24 @@ export class GameCharacter extends TabletopObject {
         sum = 0;
       }
       this.setStatusValue(name, nowOrMax, sum);
+    }
+    if ( type == 'maxLineValue') {
+      if ( limitMin && sum <= 0 && limitMin){
+        maxRecoveryMess = '(最小)';
+        sum = 0;
+      }
+      this.setStatusValue(name, nowOrMax, sum, true);
+    }
+    if ( type == 'currentLineValue'){
+      if ( sum >= data.maxLineValue && limitMax){
+        maxRecoveryMess = '(最大)';
+        sum = this.getStatusValue(name,'max',true);
+      }
+      if ( limitMin && sum <= 0 && limitMin){
+        maxRecoveryMess = '(最小)';
+        sum = 0;
+      }
+      this.setStatusValue(name, nowOrMax, sum, true);
     }
     text = text + '[' + this.name + ' ' + oldNum + '>' + sum + maxRecoveryMess + '] ';
     return text;
