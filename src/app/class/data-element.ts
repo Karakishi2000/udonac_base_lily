@@ -9,6 +9,8 @@ export class DataElement extends ObjectNode {
   @SyncVar() type: string;
   @SyncVar() currentValue: number | string;
 
+  @SyncVar() step: number;
+
   get isNumberResource(): boolean { return this.type != null && this.type === 'numberResource'; }
   get isNote(): boolean { return this.type != null && this.type === 'note'; }
 

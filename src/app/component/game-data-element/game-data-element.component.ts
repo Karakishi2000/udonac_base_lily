@@ -48,6 +48,10 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   get currentValue(): number | string { return this._currentValue; }
   set currentValue(currentValue: number | string) { this._currentValue = currentValue; this.setUpdateTimer(); }
 
+  private _step: number = 1;
+  get step(): number { return this._step; }
+  set step(step: number) { this._step = step; this.setUpdateTimer(); }
+
   private updateTimer: NodeJS.Timer = null;
 
   constructor(
@@ -158,6 +162,7 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
     this._name = object.name;
     this._currentValue = object.currentValue;
     this._value = object.value;
+    this._step = object.step;
   }
 
   private setUpdateTimer() {
@@ -166,6 +171,7 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
       if (this.gameDataElement.name !== this.name) this.gameDataElement.name = this.name;
       if (this.gameDataElement.currentValue !== this.currentValue) this.gameDataElement.currentValue = this.currentValue;
       if (this.gameDataElement.value !== this.value) this.gameDataElement.value = this.value;
+      if (this.gameDataElement.step !== this.step) this.gameDataElement.step = this.step;
       this.updateTimer = null;
     }, 66);
   }

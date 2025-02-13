@@ -40,11 +40,13 @@
       <ng-container [ngSwitch]="gameDataElement.type">
         <ng-container *ngSwitchCase="'numberResource'">
           <input [style]="'font-size: 1.0em; min-width: 90px; width: 90%; --min: 0; --max: ' + value + '; --val:' + currentValue +';' | safe: 'style'"
-            [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" />
+            [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" step="{{step}}" />
           <br>
-          <input class="is-caret" style="width: 5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue" placeholder="Value" />
+          <input class="is-caret" style="width: 5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue" placeholder="Value" step="{{step}}" />
           /
-          <input class="is-caret" style="width: 5em;" size="1" type="number" [(ngModel)]="value" placeholder="Value" />
+          <input class="is-caret" style="width: 5em;" size="1" type="number" [(ngModel)]="value" placeholder="Value" step="{{step}}" />
+          <span style="font-family: Cambria, Georgia; font-size: 0.9rem;">Step</span>
+          <input class="is-caret" style="width: 3em; text-align: right;" size="1" type="number" min="1" [(ngModel)]="step" placeholder="1" />
         </ng-container>
         <ng-container *ngSwitchCase="'note'">
           <span [hidden]="!isUrlText(value)" style="font-size: 0.8em;">
