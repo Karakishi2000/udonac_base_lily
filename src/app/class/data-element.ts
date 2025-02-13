@@ -8,8 +8,11 @@ export class DataElement extends ObjectNode {
   @SyncVar() name: string;
   @SyncVar() type: string;
   @SyncVar() currentValue: number | string;
-
+  
   @SyncVar() step: number;
+  
+  @SyncVar() currentLineValue: number | string;
+  @SyncVar() maxLineValue: number | string;
 
   get isNumberResource(): boolean { return this.type != null && this.type === 'numberResource'; }
   get isNote(): boolean { return this.type != null && this.type === 'note'; }

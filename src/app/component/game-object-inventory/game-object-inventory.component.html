@@ -127,6 +127,17 @@
             min="0" max="{{dataElm.value}}" step="{{dataElm.step}}" [(ngModel)]="dataElm.currentValue" />
         </div>
       </ng-container>
+      <ng-container *ngSwitchCase="'lineResource'">
+        <div class="resource-tag">
+          <div style="font-size: 0.8em; display: inline-block; margin-right: 0.5em;">{{dataElm.name}}</div>
+          <input class="input resource-value is-caret" type="number" [style]="'color:' + dataElm.nowValueColor +';'" size="1" [(ngModel)]="dataElm.currentValue" placeholder="Value" step="{{dataElm.step}}" />
+          <div style="font-size: 0.8em; display: inline-block; margin-right: 0.5em;">{{dataElm.currentLineValue}}/{{dataElm.maxLineValue}}</div>
+        </div>
+        <div class="resource-tag">
+          <input type="range" [style]="'font-size: 0.8em; min-width: 1em; width:' + (dataElm.name.length + 6.5) + 'em; --min: 0; --max: ' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
+            min="0" max="{{dataElm.value}}" step="{{dataElm.step}}" [(ngModel)]="dataElm.currentValue" />
+        </div>
+      </ng-container>
       <ng-container *ngSwitchCase="'check'">
         <div class="tag-name">{{dataElm.name}}</div>
         <div style="text-align: center; margin: 2px 0px 0px 0px">
