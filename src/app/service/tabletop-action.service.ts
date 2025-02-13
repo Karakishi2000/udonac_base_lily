@@ -411,16 +411,16 @@ export class TabletopActionService {
     testCharacter.location.x = 5 * 50;
     testCharacter.location.y = 9 * 50;
     testCharacter.initialize();
-    ImageTag.create(testFile.identifier).tag = 'モンスター';    //本家PR #92より
+    ImageTag.create(testFile.identifier).tag = 'モンスター';
 
-    testCharacter.createTestGameDataElement('モンスターA', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ1', '防+1', 3);
+    testCharacter.createTestGameDataElementLineResourceA('PC機体A', 1, testFile.identifier);
+    this.addBuffRound( testCharacter, 'ACS障害', 'AP損害10でスタッガー', 1);
     //-------------------------
     testCharacter = new GameCharacter('testCharacter_2');
     testCharacter.location.x = 8 * 50;
     testCharacter.location.y = 8 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターB', 1, testFile.identifier);
+    testCharacter.createTestGameDataElementLineResourceA('PC機体B', 1, testFile.identifier);
 
     //-------------------------
     testCharacter = new GameCharacter('testCharacter_3');
@@ -433,64 +433,8 @@ export class TabletopActionService {
 
     testFile = ImageStorage.instance.add(fileContext);
     ImageTag.create(testFile.identifier).tag = 'モンスター'; //本家PR #92より
-    testCharacter.createTestGameDataElement('モンスターC', 3, testFile.identifier);
+    testCharacter.createTestGameDataElementLineResourceB('手番持ちエネミー', 3, testFile.identifier);
     //-------------------------
-
-    testCharacter = new GameCharacter('testCharacter_4');
-    fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
-    fileContext.url = './assets/images/mon_150.gif';
-//本家PR #92より
-//    fileContext.tag = 'テスト01';
-
-    testFile = ImageStorage.instance.add(fileContext);
-    
-    ImageTag.create(testFile.identifier).tag = '';//本家PR #92より
-    testCharacter.location.x = 6 * 50;
-    testCharacter.location.y = 11 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターA', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ2', '攻撃+10', 1);
-    //-------------------------
-    testCharacter = new GameCharacter('testCharacter_5');
-    fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
-    fileContext.url = './assets/images/mon_211.gif';
-    testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.location.x = 12 * 50;
-    testCharacter.location.y = 12 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターB', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ2', '攻撃+10', 1);
-
-    //-------------------------
-
-    testCharacter = new GameCharacter('testCharacter_6');
-    fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
-    fileContext.url = './assets/images/mon_135.gif';
-    testFile = ImageStorage.instance.add(fileContext);
-    
-    ImageTag.create(testFile.identifier).tag = '';//本家PR #92より
-
-    testCharacter.initialize();
-    testCharacter.location.x = 5 * 50;
-    testCharacter.location.y = 13 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ3', '', 3);
-
-    //-------------------------
-
-    testCharacter = new GameCharacter('testCharacter_7');
-    fileContext = ImageFile.createEmpty('testCharacter_7_image').toContext();
-    fileContext.url = './assets/images/ninja.png';
-    testFile = ImageStorage.instance.add(fileContext);
-
-    ImageTag.create(testFile.identifier).tag = '';//本家PR #92より
-
-    testCharacter.initialize();
-    testCharacter.location.x = 10 * 50;
-    testCharacter.location.y = 5 * 50;
-    testCharacter.createTestGameDataElementCheckTable('忍者A', 1, testFile.identifier);
-
   }
 
   makeDefaultContextMenuActions(position: PointerCoordinate): ContextMenuAction[] {

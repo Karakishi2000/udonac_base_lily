@@ -450,6 +450,259 @@ export class GameCharacter extends TabletopObject {
     this.appendChild(palette);
     this.addExtendData();
   }
+  
+  createTestGameDataElementLineResourceA(name: string, size: number, imageIdentifier: string) {
+    this.createDataElements();
+    this.overViewWidth = 300;
+    this.overViewMaxHeight = 400;
+
+    let nameElement: DataElement = DataElement.create('name', name, {}, 'name_' + this.identifier);
+    let sizeElement: DataElement = DataElement.create('size', size, {}, 'size_' + this.identifier);
+    let altitudeElement: DataElement = DataElement.create('altitude', 0, {}, 'altitude_' + this.identifier);
+
+    if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
+      this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
+    }
+
+    this.commonDataElement.appendChild(nameElement);
+    this.commonDataElement.appendChild(sizeElement);
+    this.commonDataElement.appendChild(altitudeElement);
+
+    let apElement: DataElement = DataElement.create('AP', '', {}, 'AP' + this.identifier);
+    let coreApElement: DataElement = DataElement.create('コアAP', 50, { 'type': 'lineResource', 'currentValue': '50', 'currentLineValue': '3', 'maxLineValue': '3', 'step': '10' }, 'コアAP_' + this.identifier);
+    let rightApElement: DataElement = DataElement.create('右腕部AP', 50, { 'type': 'lineResource', 'currentValue': '50', 'currentLineValue': '2', 'maxLineValue': '2', 'step': '10' }, '右腕部AP_' + this.identifier);
+    let leftApElement: DataElement = DataElement.create('左腕部AP', 50, { 'type': 'lineResource', 'currentValue': '50', 'currentLineValue': '2', 'maxLineValue': '2', 'step': '10' }, '左腕部AP_' + this.identifier);
+    let paApElement: DataElement = DataElement.create('脚部AP', 40, { 'type': 'lineResource', 'currentValue': '40', 'currentLineValue': '3', 'maxLineValue': '3', 'step': '10' }, '脚部AP_' + this.identifier);
+
+    this.detailDataElement.appendChild(apElement);
+    apElement.appendChild(coreApElement);
+    apElement.appendChild(rightApElement);
+    apElement.appendChild(leftApElement);
+    apElement.appendChild(paApElement);
+
+    let bulletsElement: DataElement = DataElement.create('残弾数', '', {}, '残弾数' + this.identifier);
+    let raBulletsElement: DataElement = DataElement.create('RA残弾数', 6, { 'type': 'lineResource', 'currentValue': '6', 'currentLineValue': '2', 'maxLineValue': '2' }, 'RA残弾数_' + this.identifier);
+    let laBulletsElement: DataElement = DataElement.create('LA残弾数', 1, { 'type': 'lineResource', 'currentValue': '0', 'currentLineValue': '0', 'maxLineValue': '0' }, 'LA残弾数_' + this.identifier);
+    let rbBulletsElement: DataElement = DataElement.create('RB残弾数', 4, { 'type': 'lineResource', 'currentValue': '4', 'currentLineValue': '4', 'maxLineValue': '4' }, 'RB残弾数_' + this.identifier);
+    let lbBulletsElement: DataElement = DataElement.create('LB残弾数', 4, { 'type': 'lineResource', 'currentValue': '4', 'currentLineValue': '2', 'maxLineValue': '2' }, 'LB残弾数_' + this.identifier);
+
+    this.detailDataElement.appendChild(bulletsElement);
+    bulletsElement.appendChild(raBulletsElement);
+    bulletsElement.appendChild(laBulletsElement);
+    bulletsElement.appendChild(rbBulletsElement);
+    bulletsElement.appendChild(lbBulletsElement);
+
+    let testElement: DataElement = DataElement.create('能力', '', {}, '能力' + this.identifier);
+    testElement.appendChild(DataElement.create('部隊レベル', 10, {}, '部隊レベル' + this.identifier));
+    testElement.appendChild(DataElement.create('対システム障害', 2, {}, '対システム障害' + this.identifier));
+    testElement.appendChild(DataElement.create('サーチ', 1, {}, 'サーチ' + this.identifier));
+    testElement.appendChild(DataElement.create('ハッキング', 1, {}, 'ハッキング' + this.identifier));
+    testElement.appendChild(DataElement.create('マニューバ', 0, {}, 'マニューバ' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('コア防御性能', '', {}, 'コア防御性能' + this.identifier);
+    testElement.appendChild(DataElement.create('コア対弾防御', 0, {}, 'コア対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('コア対爆防御', 0, {}, 'コア対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('コア対E防御', 0, {}, 'コア対E防御' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('右腕部防御性能', '', {}, '右腕部防御性能' + this.identifier);
+    testElement.appendChild(DataElement.create('右腕部対弾防御', 0, {}, '右腕部対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('右腕部対爆防御', 0, {}, '右腕部対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('右腕部対E防御', 0, {}, '右腕部対E防御' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('左腕部防御性能', '', {}, '左腕部防御性能' + this.identifier);
+    testElement.appendChild(DataElement.create('左腕部対弾防御', 0, {}, '左腕部対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('左腕部対爆防御', 0, {}, '左腕部対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('左腕部対E防御', 0, {}, '左腕部対E防御' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('脚部防御性能', '', {}, '脚部防御性能' + this.identifier);
+    testElement.appendChild(DataElement.create('脚部対弾防御', 0, {}, '脚部対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('脚部対爆防御', 0, {}, '脚部対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('脚部対E防御', 0, {}, '脚部対E防御' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('攻撃計算変数', '', {}, '攻撃計算変数' + this.identifier);
+    testElement.appendChild(DataElement.create('攻撃属性', '爆', {}, '攻撃属性' + this.identifier));
+    testElement.appendChild(DataElement.create('Hit数', 3, {}, 'Hit数' + this.identifier));
+    testElement.appendChild(DataElement.create('威力補正', -10, {}, '威力補正' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('防御計算変数', '', {}, '防御計算変数' + this.identifier);
+    testElement.appendChild(DataElement.create('回避Hit数', 2, {}, '回避Hit数' + this.identifier));
+    testElement.appendChild(DataElement.create('AP損害', 100, {'type': 'numberResource', 'currentValue': '0'}, 'AP損害' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    //
+    let domParser: DOMParser = new DOMParser();
+    let gameCharacterXMLDocument: Document = domParser.parseFromString(this.rootDataElement.toXml(), 'application/xml');
+
+    let chatPalette: ChatPalette = new ChatPalette('ChatPalette_' + this.identifier);
+    chatPalette.setPalette(`◆行動リスト
+【RA:アサルトライフル（1Hit）】\\nレンジ：1　対象：1体　コスト：3⃣　◆\\n弾｜スナイプ　1 Hit　威力補正：+5\\n:攻撃属性>弾 :Hit数=1 :威力補正=5 &RAリロード/このターンRA使用不可/1
+【RA:アサルトライフル（2Hit）】\\nレンジ：1　対象：1体　コスト：3⃣4⃣　◆◆\\n弾｜スナイプ　2 Hit　威力補正：+5\\n:攻撃属性>弾 :Hit数=2 :威力補正=5 &RAリロード/このターンRA使用不可/1
+【RA:アサルトライフル（3Hit）】\\nレンジ：1　対象：1体　コスト：3⃣4⃣5⃣　◆◆◆\\n弾｜スナイプ　3 Hit　威力補正：+5\\n:攻撃属性>弾 :Hit数=3 :威力補正=5 &RAリロード/このターンRA使用不可/1
+
+【LA:パルスブレード（1Hit）】\\nレンジ：0　対象：1体　コスト：ゾロ2\\nE｜メレー　1 Hit　威力補正：0\\n:攻撃属性>E :Hit数=1 :威力補正=0 &LAリロード/このターンLA使用不可/1
+【LA:パルスブレード（2Hit）】\\nレンジ：0　対象：1体　コスト：ゾロ3\\nE｜メレー　2 Hit　威力補正：0\\n:攻撃属性>E :Hit数=2 :威力補正=0 &LAリロード/このターンLA使用不可/1
+
+【RB:4連装ミサイル】\\nレンジ：2　対象：1体　コスト：7⃣\\n爆｜ミサイル　2 Hit　威力補正：+5\\n:攻撃属性>爆 :Hit数=2 :威力補正=5 &RBリロード/このターンRB使用不可/1
+
+【LB:小型2連双対ミサイル（レンジ1）】\\nレンジ：1　対象：1体　コスト：7⃣\\n爆｜ミサイル　2 Hit　威力補正：+5\\n:攻撃属性>爆 :Hit数=2 :威力補正=5 &LBリロード/このターンLB使用不可/1
+【LB:小型2連双対ミサイル（レンジ2）】\\nレンジ：2　対象：1体　コスト：8⃣\\n爆｜ミサイル　2 Hit　威力補正：+5\\n:攻撃属性>爆 :Hit数=2 :威力補正=5 &LBリロード/このターンLB使用不可/1
+
+
+
+◆被攻撃処理
+【回避なし】 :回避Hit数=0
+【合計回避１】 :回避Hit数=1
+【合計回避２】 :回避Hit数=2
+【合計回避３】 :回避Hit数=3
+【AP損害計算】 :AP損害=(t{Hit数}-{回避Hit数}+t{威力補正}/10U)*10-10L :AP損害+10
+
+choice[1: コア, 2: コア, 3: 右腕部, 4: 左腕部, 5: 脚部, 6: 脚部]\\n【被弾部位決定】
+
+【コアAP損害】 :コアAP-({AP損害}-{コア対t{攻撃属性}防御})Z
+【右ﾌﾚｰﾑAP損害】 :右腕部AP-({AP損害}-{右腕部対t{攻撃属性}防御})Z
+【左ﾌﾚｰﾑAP損害】 :左腕部AP-({AP損害}-{左腕部対t{攻撃属性}防御})Z
+【PA_AP損害】 :脚部AP-({AP損害}-{脚部対t{攻撃属性}防御})Z
+&スタッガー/コア直撃+行動不可/1`);
+    chatPalette.initialize();
+    this.appendChild(chatPalette);
+
+    let buffPalette: BuffPalette = new BuffPalette('BuffPalette_' + this.identifier);
+    buffPalette.setPalette(`カメラ障害 ミサイル系アタック不可 1
+ACS障害 AP損害10でスタッガー 1
+スタッガー コア直撃+行動不可 1
+コア直撃 コア確定Hit+防御無視 1`);
+    buffPalette.initialize();
+    this.appendChild(buffPalette);
+
+    this.addExtendData();
+  }
+
+  createTestGameDataElementLineResourceB(name: string, size: number, imageIdentifier: string) {
+    this.createDataElements();
+    this.overViewWidth = 300;
+
+    let nameElement: DataElement = DataElement.create('name', name, {}, 'name_' + this.identifier);
+    let sizeElement: DataElement = DataElement.create('size', size, {}, 'size_' + this.identifier);
+    let altitudeElement: DataElement = DataElement.create('altitude', 0, {}, 'altitude_' + this.identifier);
+
+    if (this.imageDataElement.getFirstElementByName('imageIdentifier')) {
+      this.imageDataElement.getFirstElementByName('imageIdentifier').value = imageIdentifier;
+    }
+
+    this.commonDataElement.appendChild(nameElement);
+    this.commonDataElement.appendChild(sizeElement);
+    this.commonDataElement.appendChild(altitudeElement);
+
+    let apElement: DataElement = DataElement.create('AP', '', {}, 'AP' + this.identifier);
+    let coreApElement: DataElement = DataElement.create('コアAP', 70, { 'type': 'lineResource', 'currentValue': '70', 'currentLineValue': '3', 'maxLineValue': '3', 'step': '10' }, 'コアAP_' + this.identifier);
+    let rightApElement: DataElement = DataElement.create('右ﾌﾚｰﾑAP', 50, { 'type': 'lineResource', 'currentValue': '50', 'currentLineValue': '2', 'maxLineValue': '2', 'step': '10' }, '右ﾌﾚｰﾑAP_' + this.identifier);
+    let leftApElement: DataElement = DataElement.create('左ﾌﾚｰﾑAP', 50, { 'type': 'lineResource', 'currentValue': '50', 'currentLineValue': '2', 'maxLineValue': '2', 'step': '10' }, '左ﾌﾚｰﾑAP_' + this.identifier);
+    let paApElement: DataElement = DataElement.create('PA_AP', 60, { 'type': 'lineResource', 'currentValue': '60', 'currentLineValue': '1', 'maxLineValue': '1', 'step': '10' }, 'PA_AP_' + this.identifier);
+
+    this.detailDataElement.appendChild(apElement);
+    apElement.appendChild(coreApElement);
+    apElement.appendChild(rightApElement);
+    apElement.appendChild(leftApElement);
+    apElement.appendChild(paApElement);
+
+    let testElement: DataElement = DataElement.create('能力', '', {}, '能力' + this.identifier);
+    testElement.appendChild(DataElement.create('レベル', 20, {}, 'レベル' + this.identifier));
+    testElement.appendChild(DataElement.create('解析目標値', 11, {}, '解析目標値' + this.identifier));
+    testElement.appendChild(DataElement.create('対システム障害値', 11, {}, '対システム障害値' + this.identifier));
+    this.detailDataElement.appendChild(testElement);
+
+    testElement = DataElement.create('コア防御性能', '', {}, 'コア防御性能' + this.identifier);
+    this.detailDataElement.appendChild(testElement);
+    testElement.appendChild(DataElement.create('コア対弾防御', 10, {}, 'コア対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('コア対爆防御', 10, {}, 'コア対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('コア対E防御', 0, {}, 'コア対E防御' + this.identifier));
+
+    testElement = DataElement.create('右ﾌﾚｰﾑ防御性能', '', {}, '右ﾌﾚｰﾑ防御性能' + this.identifier);
+    this.detailDataElement.appendChild(testElement);
+    testElement.appendChild(DataElement.create('右ﾌﾚｰﾑ対弾防御', 10, {}, '右ﾌﾚｰﾑ対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('右ﾌﾚｰﾑ対爆防御', 10, {}, '右ﾌﾚｰﾑ対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('右ﾌﾚｰﾑ対E防御', 0, {}, '右ﾌﾚｰﾑ対E防御' + this.identifier));
+
+    testElement = DataElement.create('左ﾌﾚｰﾑ防御性能', '', {}, '左ﾌﾚｰﾑ防御性能' + this.identifier);
+    this.detailDataElement.appendChild(testElement);
+    testElement.appendChild(DataElement.create('左ﾌﾚｰﾑ対弾防御', 10, {}, '左ﾌﾚｰﾑ対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('左ﾌﾚｰﾑ対爆防御', 10, {}, '左ﾌﾚｰﾑ対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('左ﾌﾚｰﾑ対E防御', 0, {}, '左ﾌﾚｰﾑ対E防御' + this.identifier));
+
+    testElement = DataElement.create('PA防御性能', '', {}, 'PA防御性能' + this.identifier);
+    this.detailDataElement.appendChild(testElement);
+    testElement.appendChild(DataElement.create('PA対弾防御', 10, {}, 'PA対弾防御' + this.identifier));
+    testElement.appendChild(DataElement.create('PA対爆防御', 10, {}, 'PA対爆防御' + this.identifier));
+    testElement.appendChild(DataElement.create('PA対E防御', 10, {}, 'PA対E防御' + this.identifier));
+
+    testElement = DataElement.create('攻撃計算変数', '', {}, '攻撃計算変数' + this.identifier);
+    this.detailDataElement.appendChild(testElement);
+    testElement.appendChild(DataElement.create('攻撃属性', '爆', {}, '攻撃属性' + this.identifier));
+    testElement.appendChild(DataElement.create('Hit数', 3, {}, 'Hit数' + this.identifier));
+    testElement.appendChild(DataElement.create('威力補正', -10, {}, '威力補正' + this.identifier));
+
+    testElement = DataElement.create('防御計算変数', '', {}, '防御計算変数' + this.identifier);
+    this.detailDataElement.appendChild(testElement);
+    testElement.appendChild(DataElement.create('回避Hit数', 2, {}, '回避Hit数' + this.identifier));
+    testElement.appendChild(DataElement.create('AP損害', 100, {'type': 'numberResource', 'currentValue': '0'}, 'AP損害' + this.identifier));
+
+    //
+    let domParser: DOMParser = new DOMParser();
+    let gameCharacterXMLDocument: Document = domParser.parseFromString(this.rootDataElement.toXml(), 'application/xml');
+
+    let chatPalette: ChatPalette = new ChatPalette('ChatPalette_' + this.identifier);
+    chatPalette.setPalette(`◆行動リスト
+【百五十六連装ミサイル（↑KQJ）】\\nレンジ：1-2　対象：ALL\\n属性｜火力タイプ：　爆｜ミサイル\\nヒットレート：2 Hit　威力補正：-10\\n:攻撃属性>爆 :Hit数=2 :威力補正=-10
+【百五十六連装ミサイル（10~6）】\\nレンジ：1-2　対象：ALL\\n属性｜火力タイプ：　爆｜ミサイル\\nヒットレート：3 Hit　威力補正：-10\\n:攻撃属性>爆 :Hit数=3 :威力補正=-10
+【百五十六連装ミサイル（5~A↓）】\\nレンジ：1-2　対象：ALL\\n属性｜火力タイプ：　爆｜ミサイル\\nヒットレート：4 Hit　威力補正：-10\\n:攻撃属性>爆 :Hit数=4 :威力補正=-10
+
+【三連ガトリング（↑KQJ）】\\nレンジ：1　対象：1\\n属性｜火力タイプ：　弾｜ガトリング\\nヒットレート：2 Hit　威力補正：+10\\n:攻撃属性>弾 :Hit数=2 :威力補正=10
+【三連ガトリング（10~6）】\\nレンジ：1　対象：1\\n属性｜火力タイプ：　弾｜ガトリング\\nヒットレート：3 Hit　威力補正：+10\\n:攻撃属性>弾 :Hit数=3 :威力補正=10
+【三連ガトリング（5~A↓）】\\nレンジ：1　対象：1\\n属性｜火力タイプ：　弾｜ガトリング\\nヒットレート：4 Hit　威力補正：+10\\n:攻撃属性>弾 :Hit数=4 :威力補正=10
+
+【四連ショットガン（↑KQJ）】\\nレンジ：0　対象：1体\\n属性｜火力タイプ：　弾｜スプレッド\\nヒットレート：1 Hit　威力補正：+10\\n:攻撃属性>弾 :Hit数=1 :威力補正=10
+【四連ショットガン（10~A↓）】\\nレンジ：0　対象：1体\\n属性｜火力タイプ：　弾｜スプレッド\\nヒットレート：2 Hit　威力補正：+10\\n:攻撃属性>弾 :Hit数=2 :威力補正=10
+
+【可変式超高温バーナー（↑K~A↓）】\\nレンジ：0-1　対象：1エリア\\n属性｜火力タイプ：　弾｜メレー\\nヒットレート：2 Hit　威力補正：0\\n:攻撃属性>弾 :Hit数=2 :威力補正=0
+
+【パルスアーマー再展開】 :PA_AP={PA_AP^} :PA_AP~={PA_AP~^}
+
+
+
+◆被攻撃処理
+【回避なし】 :回避Hit数=0
+【合計回避１】 :回避Hit数=1
+【合計回避２】 :回避Hit数=2
+【合計回避３】 :回避Hit数=3
+【AP損害計算】 :AP損害=(t{Hit数}-{回避Hit数}+t{威力補正}/10U)*10-10L :AP損害+10
+
+choice[1: コア, 2: コア, 3: 右ﾌﾚｰﾑ, 4: 右ﾌﾚｰﾑ, 5: 左ﾌﾚｰﾑ, 6: 左ﾌﾚｰﾑ]\\n【被弾部位決定】
+
+【コアAP損害】 :コアAP-({AP損害}-{コア対t{攻撃属性}防御})Z
+【右ﾌﾚｰﾑAP損害】 :右ﾌﾚｰﾑAP-({AP損害}-{右ﾌﾚｰﾑ対t{攻撃属性}防御})Z
+【左ﾌﾚｰﾑAP損害】 :左ﾌﾚｰﾑAP-({AP損害}-{左ﾌﾚｰﾑ対t{攻撃属性}防御})Z
+【PA_AP損害】 :PA_AP-({AP損害}-{PA対t{攻撃属性}防御})Z
+【パルスアーマー消失】 &スタッガー/コア直撃+行動不可/1:PA_AP=0 :PA_AP~=0
+&スタッガー/コア直撃+行動不可/1`);
+    chatPalette.initialize();
+    this.appendChild(chatPalette);
+
+    let buffPalette: BuffPalette = new BuffPalette('BuffPalette_' + this.identifier);
+    buffPalette.setPalette(`カメラ障害 ミサイル系アタック不可 1
+ACS障害 AP損害10でスタッガー 1
+スタッガー コア直撃+行動不可 1
+コア直撃 コア確定Hit+防御無視 1`);
+    buffPalette.initialize();
+    this.appendChild(buffPalette);
+
+    this.addExtendData();
+  }
 
   deleteBuff(name: string):boolean{
     if (this.buffDataElement.children){
