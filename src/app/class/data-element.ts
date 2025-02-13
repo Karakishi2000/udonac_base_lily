@@ -11,8 +11,8 @@ export class DataElement extends ObjectNode {
   
   @SyncVar() step: number;
   
-  @SyncVar() currentLineValue: number | string;
-  @SyncVar() maxLineValue: number | string;
+  @SyncVar() currentLineValue: number;
+  @SyncVar() maxLineValue: number;
 
   get isNumberResource(): boolean { return this.type != null && this.type === 'numberResource'; }
   get isNote(): boolean { return this.type != null && this.type === 'note'; }

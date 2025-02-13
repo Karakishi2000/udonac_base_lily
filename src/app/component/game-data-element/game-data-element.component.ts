@@ -52,13 +52,13 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   get step(): number { return this._step; }
   set step(step: number) { this._step = step; this.setUpdateTimer(); }
 
-  private _currentLineValue: number | string = 0;
-  get currentLineValue(): number | string { return this._currentLineValue; }
-  set currentLineValue(currentLineValue: number | string) { this._currentLineValue = currentLineValue; this.setUpdateTimer(); }
+  private _currentLineValue: number = 0;
+  get currentLineValue(): number { return this._currentLineValue; }
+  set currentLineValue(currentLineValue: number) { this._currentLineValue = currentLineValue; this.setUpdateTimer(); }
   
-  private _maxLineValue: number | string = 0;
-  get maxLineValue(): number | string { return this._maxLineValue; }
-  set maxLineValue(maxLineValue: number | string) { this._maxLineValue = maxLineValue; this.setUpdateTimer(); }
+  private _maxLineValue: number = 0;
+  get maxLineValue(): number { return this._maxLineValue; }
+  set maxLineValue(maxLineValue: number) { this._maxLineValue = maxLineValue; this.setUpdateTimer(); }
   
   private updateTimer: NodeJS.Timer = null;
 
