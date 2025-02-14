@@ -19,13 +19,13 @@ export class DataSummarySetting extends GameObject implements InnerXml {
     return DataSummarySetting._instance;
   }
 
-  @SyncVar() sortTag: string = 'コアAP';
-  @SyncVar() sortOrder: SortOrder = SortOrder.ASC;
+  @SyncVar() sortTag: string = 'レベル';
+  @SyncVar() sortOrder: SortOrder = SortOrder.DESC;
 
-  @SyncVar() sortTag2nd: string = 'HP';
+  @SyncVar() sortTag2nd: string = 'コアAP';
   @SyncVar() sortOrder2nd: SortOrder = SortOrder.ASC;
 
-  @SyncVar() dataTag: string = '?P 残弾数';
+  @SyncVar() dataTag: string = 'レベル AP 残弾数';
 
   private _dataTag: string;
   private _dataTags: string[];
