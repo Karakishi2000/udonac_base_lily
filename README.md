@@ -1,78 +1,44 @@
-# ユドナリウムリリィ
+# Udon-AC（ユドナック）
 
-このプロジェクトはユドナリウムをカスタマイズするために分岐し作成しました
+このプロジェクトはユドナリウムリリィをさらにカスタマイズするために分岐し作成しました
 
 ユドナリウム（Udonarium）はWebブラウザで動作するボードゲームオンラインセッション支援ツールです。
 本家ユドナリウムの開発範囲は本家に著作権が有り、
-追加したコードは私円柱(entyu)あるいは私が組み込んだソースの作者に著作権があります。
+リリィ以降追加されたコードは私空岸綴(Karakishi2000)、リリィ作者円柱(entyu)様あるいはその組み込んだ各ソース部分の作者に著作権があります。
 いずれにせよライセンスは本家のMITを引き継ぎます。
-名前混同を避けるため本開発版名称はudonarium_lily　ユドナリウムリリィとします。
+名前混同を避けるため本開発版名称はudonac　ユドナックとします。
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/TK11235/udonarium/blob/master/LICENSE)
 
+# 実装済み項目
+■Line付きリソースの追加（複数ゲージHP等の表現）
 
-■立ち絵
+　□およびその操作コマンド（:name~、:name~^）
 
-■発言に色を付ける
+■通常リソースとLine付きリソースへの離散化ステップ変更機能の追加（値が10ごとなどのみで変更できるようになる）
 
-■ログの書き出し、消去機能
+■インベントリ表示項目設定をワイルドカードに対応（*、?）
 
-■カウンターリモコン
+# 実装検討項目
+■作成と同時に振られ、原則後から出目を変更できないダイスシンボル（振り忘れ・誤変更防止）
 
-■バフデバフ表示
+　□ダイスをコストとして消費するシステムを想定し、上記シンボルを削除すると同時にチャットに消費を宣言する処理
 
-■ダイス表
+■上記シンボルを簡単な操作で生成・個数管理できる親オブジェクトの追加
 
-■画像タグ
+　□最大所持数を保持しそれ以上生成しない・個人ごとのパラメータに合わせた一定個数の生成など
 
-■ポップアップ等のUI調整機能
-
-を追加実装しています。
-
-![lily_sample](https://user-images.githubusercontent.com/61339319/95869259-26b41380-0da6-11eb-96fa-1e6c6858c531.png)
-
+<br/><br/>
 
 ---------以下本家からの一部抜粋です---------------
 
 https://github.com/TK11235/udonarium
 
 ## サーバ設置
-ユーザ自身でWebサーバを用意し、そのサーバにユドナリウムリリィを設置して利用することができます。  
-以下のファイルをダウンロードして解凍し、Webサーバに配置してください。  
-v1.05.0からYouTubeカットイン機能があります。YouTubeの規約もご確認ください。
+ユーザ自身でWebサーバを用意し、そのサーバにユドナックを設置して利用することができます。  
+リリィv1.05.0からYouTubeカットイン機能があります。YouTubeの規約もご確認ください。
 
 
-最新版v1.11.0
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.11.0_/udonarium_lily_v1.11.0.zip
-
-旧バージョン
-
-https://github.com/entyu/udonarium_lily/releases/download/V1.10.1/udonarium_lily-v1.10.1.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.10.0/udonarium_lily-v1.10.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.09.1/udonarium_lily-v1.09.1.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.09.0/udonarium_lily-v1.09.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.08.1/udonarium_lily-v1.08.1.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.08.0/udonarium_lily-v1.08.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.07.0/udonarium_lily-v1.07.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.06.0/udonarium_lily-v1.06.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.05.0/udonarium_lily-v1.05.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/%EF%BD%961.04.0/udonarium_lily-v1.04.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.03.0/udonarium_lily-v1.03.0.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.02.2/udonarium_lily-v1.02.2.zip
-
-https://github.com/entyu/udonarium_lily/releases/download/v1.02.1/udonarium_lily-v1.02.1.zip
 
 
 **開発者向けのソースコードをダウンロードしないように注意して下さい。**
