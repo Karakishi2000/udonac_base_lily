@@ -27,6 +27,8 @@ export class DiceSymbol extends TabletopObject {
   @SyncVar() specifyKomaImageFlag: boolean = false;
   @SyncVar() komaImageHeignt: number = 100;
 
+  @SyncVar() isEnDice: boolean = false;
+
   get name(): string { return this.getCommonValue('name', ''); }
   set name(name: string) { this.setCommonValue('name', name); }
   get size(): number { return this.getCommonValue('size', 1); }
@@ -107,7 +109,7 @@ export class DiceSymbol extends TabletopObject {
     return faces;
   }
 
-  static create(name: string, type: DiceType, size: number, identifier?: string): DiceSymbol {
+  static create(name: string, type: DiceType, size: number, identifier?: string, isEnDice?: boolean, specificFace?: string): DiceSymbol {
     let object: DiceSymbol = identifier ? new DiceSymbol(identifier) : new DiceSymbol();
 
     object.createDataElements();
@@ -115,7 +117,16 @@ export class DiceSymbol extends TabletopObject {
     object.commonDataElement.appendChild(DataElement.create('size', size, {}, 'size_' + object.identifier));
 
     object.makeDiceFace(type, object.identifier);
+    object.isEnDice = isEnDice;
     object.initialize();
+    
+    if(isEnDice && !specificFace){
+      object.diceRoll();
+    }
+    if(specificFace){
+      object.face = specificFace;
+    }
+    
     return object;
   }
 }
