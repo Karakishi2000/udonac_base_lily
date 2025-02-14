@@ -94,8 +94,8 @@ export class TabletopActionService {
     return textNote;
   }
 
-  createDiceSymbol(position: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string): DiceSymbol {
-    let diceSymbol = DiceSymbol.create(name, diceType, 1);
+  createDiceSymbol(position: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string, isEnDice?: boolean): DiceSymbol {
+    let diceSymbol = DiceSymbol.create(name, diceType, 1, undefined, isEnDice);
     let image: ImageFile = null;
 
     diceSymbol.faces.forEach(face => {
@@ -506,6 +506,13 @@ export class TabletopActionService {
       { menuName: 'D20', diceName: 'D20', type: DiceType.D20, imagePathPrefix: '20_dice' },
     ];
     let subMenus: ContextMenuAction[] = [];
+
+    subMenus.push({
+      name: 'ENダイス(AC6)', action: () => {
+        this.createDiceSymbol(position, 'EN', DiceType.D6, '6_dice', true);
+        SoundEffect.play(PresetSound.diceRoll1);
+      }
+    });
 
     dices.forEach(item => {
       subMenus.push({

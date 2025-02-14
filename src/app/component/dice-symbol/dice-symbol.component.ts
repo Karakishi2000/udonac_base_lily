@@ -27,6 +27,9 @@ import { ImageService } from 'service/image.service';
 import { PanelOption, PanelService } from 'service/panel.service';
 import { PointerDeviceService } from 'service/pointer-device.service';
 
+import { ChatTabList } from '@udonarium/chat-tab-list';
+import { ChatMessageService } from 'service/chat-message.service';
+
 @Component({
   selector: 'dice-symbol',
   templateUrl: './dice-symbol.component.html',
@@ -78,6 +81,8 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
   get imageHeignt(): number { return this.diceSymbol.komaImageHeignt; }
   get specifyImageFlag(): boolean { return this.diceSymbol.specifyKomaImageFlag; }
 
+  get isEnDice(): boolean { return this.diceSymbol.isEnDice; }
+
   get faces(): string[] { return this.diceSymbol.faces; }
   get imageFile(): ImageFile {
     return this.imageService.getEmptyOr(this.diceSymbol.imageFile);
@@ -113,7 +118,9 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     private elementRef: ElementRef<HTMLElement>,
     private changeDetector: ChangeDetectorRef,
     private imageService: ImageService,
-    private pointerDeviceService: PointerDeviceService) { }
+    private pointerDeviceService: PointerDeviceService,
+    private chatMessageService: ChatMessageService
+  ) { }
 
   ngOnInit() {
     EventSystem.register(this)
@@ -153,6 +160,11 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     this.rotableOption = {
       tabletopObject: this.diceSymbol
     };
+    
+    if(this.diceSymbol.isEnDice){
+      this.sendMessage('ENダイス生成[' + this.face + ']');
+      EventSystem.call('ROLL_DICE_SYMBOL', { identifier: this.diceSymbol.identifier });
+    }
   }
 
   ngAfterViewInit() {
@@ -213,7 +225,15 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stopDoubleClickTimer();
     let distance = (this.doubleClickPoint.x - this.input.pointer.x) ** 2 + (this.doubleClickPoint.y - this.input.pointer.y) ** 2;
     if (distance < 10 ** 2) {
-      if (this.isVisible) this.diceRoll();
+      if (this.isVisible) {
+        if (this.isEnDice) {
+          if(this.isEnDice) this.sendMessage('ENダイス消費[' + this.face + ']');
+          this.diceSymbol.destroy();
+          SoundEffect.play(PresetSound.sweep);
+        }else{
+          this.diceRoll();
+        }
+      }
     }
   }
 
@@ -230,7 +250,9 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isVisible) {
       actions.push({
         name: 'ダイスを振る', action: () => {
+          let prevFace = this.face;
           this.diceRoll();
+          if (this.isEnDice) this.sendMessage('ENダイスリロール[' + prevFace + ']→[' + this.face + ']');
         }
       });
     }
@@ -243,7 +265,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     }
-    if (!this.isMine) {
+    if (!this.isMine && !this.isEnDice) {
       actions.push({
         name: '自分だけ見る', action: () => {
           this.owner = Network.peerContext.userId;
@@ -257,6 +279,7 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
       this.faces.forEach(face => {
         subActions.push({
           name: `${face}`, action: () => {
+            if(this.isEnDice) this.sendMessage('ENダイス手動変更[' + this.face + ']→[' + face + ']');
             this.face = face;
             SoundEffect.play(PresetSound.dicePut);
           }
@@ -281,17 +304,20 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
     actions.push(ContextMenuSeparator);
 
     actions.push({ name: '詳細を表示', action: () => { this.showDetail(this.diceSymbol); } });
-    actions.push({
-      name: 'コピーを作る', action: () => {
-        let cloneObject = this.diceSymbol.clone();
-        cloneObject.location.x += this.gridSize;
-        cloneObject.location.y += this.gridSize;
-        cloneObject.update();
-        SoundEffect.play(PresetSound.dicePut);
-      }
-    });
+    if (!this.isEnDice){
+      actions.push({
+        name: 'コピーを作る', action: () => {
+          let cloneObject = this.diceSymbol.clone();
+          cloneObject.location.x += this.gridSize;
+          cloneObject.location.y += this.gridSize;
+          cloneObject.update();
+          SoundEffect.play(PresetSound.dicePut);
+        }
+      });
+    }
     actions.push({
       name: '削除する', action: () => {
+        if(this.isEnDice) this.sendMessage('ENダイス削除[' + this.face + ']');
         this.diceSymbol.destroy();
         SoundEffect.play(PresetSound.sweep);
       }
@@ -334,5 +360,12 @@ export class DiceSymbolComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private adjustMinBounds(value: number, min: number = 0): number {
     return value < min ? min : value;
+  }
+  
+  private sendMessage (text: string) {
+    const chatTabList = ObjectStore.instance.get<ChatTabList>('ChatTabList');
+    const sysTab = chatTabList.systemMessageTab;
+    
+    this.chatMessageService.sendMessage(sysTab, text + ' <自動メッセージ>', null, PeerCursor.myCursor.identifier);
   }
 }
