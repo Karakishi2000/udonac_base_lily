@@ -195,7 +195,7 @@ export class TabletopActionService {
     let gameTable = new GameTable('gameTable');
     let testBgFile: ImageFile = null;
     let bgFileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
-    bgFileContext.url = './assets/images/BG10a_80.jpg';
+    bgFileContext.url = './assets/images/BG_AC6TRPG_grid.png';
     testBgFile = ImageStorage.instance.add(bgFileContext);
     //本家PR #92より
     ImageTag.create(testBgFile.identifier).tag = '背景';    
@@ -206,8 +206,8 @@ export class TabletopActionService {
 
     gameTable.name = '最初のテーブル';
     gameTable.imageIdentifier = testBgFile.identifier;
-    gameTable.width = 20;
-    gameTable.height = 15;
+    gameTable.width = 18;
+    gameTable.height = 18;
     gameTable.initialize();
 
     tableSelecter.viewTableIdentifier = gameTable.identifier;
@@ -408,8 +408,8 @@ export class TabletopActionService {
     fileContext = ImageFile.createEmpty('testCharacter_1_image').toContext();
     fileContext.url = './assets/images/mon_052.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.location.x = 5 * 50;
-    testCharacter.location.y = 9 * 50;
+    testCharacter.location.x = 5.5 * 50;
+    testCharacter.location.y = 9.5 * 50;
     testCharacter.initialize();
     ImageTag.create(testFile.identifier).tag = 'モンスター';
 
@@ -417,8 +417,8 @@ export class TabletopActionService {
     this.addBuffRound( testCharacter, 'ACS障害', 'AP損害10でスタッガー', 1);
     //-------------------------
     testCharacter = new GameCharacter('testCharacter_2');
-    testCharacter.location.x = 8 * 50;
-    testCharacter.location.y = 8 * 50;
+    testCharacter.location.x = 7.5 * 50;
+    testCharacter.location.y = 7.5 * 50;
     testCharacter.initialize();
     testCharacter.createTestGameDataElementLineResourceA('PC機体B', 1, testFile.identifier);
 
@@ -427,13 +427,13 @@ export class TabletopActionService {
     fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
     fileContext.url = './assets/images/mon_128.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.location.x = 4 * 50;
-    testCharacter.location.y = 2 * 50;
+    testCharacter.location.x = 5 * 50;
+    testCharacter.location.y = 3 * 50;
     testCharacter.initialize();
 
     testFile = ImageStorage.instance.add(fileContext);
     ImageTag.create(testFile.identifier).tag = 'モンスター'; //本家PR #92より
-    testCharacter.createTestGameDataElementLineResourceB('手番持ちエネミー', 3, testFile.identifier);
+    testCharacter.createTestGameDataElementLineResourceB('手番持ちエネミー', 2, testFile.identifier);
     //-------------------------
   }
 
