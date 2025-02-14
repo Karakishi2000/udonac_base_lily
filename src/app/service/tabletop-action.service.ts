@@ -94,8 +94,8 @@ export class TabletopActionService {
     return textNote;
   }
 
-  createDiceSymbol(position: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string): DiceSymbol {
-    let diceSymbol = DiceSymbol.create(name, diceType, 1);
+  createDiceSymbol(position: PointerCoordinate, name: string, diceType: DiceType, imagePathPrefix: string, isEnDice?: boolean): DiceSymbol {
+    let diceSymbol = DiceSymbol.create(name, diceType, 1, undefined, isEnDice);
     let image: ImageFile = null;
 
     diceSymbol.faces.forEach(face => {
@@ -195,7 +195,7 @@ export class TabletopActionService {
     let gameTable = new GameTable('gameTable');
     let testBgFile: ImageFile = null;
     let bgFileContext = ImageFile.createEmpty('testTableBackgroundImage_image').toContext();
-    bgFileContext.url = './assets/images/BG10a_80.jpg';
+    bgFileContext.url = './assets/images/BG_AC6TRPG_grid.png';
     testBgFile = ImageStorage.instance.add(bgFileContext);
     //本家PR #92より
     ImageTag.create(testBgFile.identifier).tag = '背景';    
@@ -206,8 +206,8 @@ export class TabletopActionService {
 
     gameTable.name = '最初のテーブル';
     gameTable.imageIdentifier = testBgFile.identifier;
-    gameTable.width = 20;
-    gameTable.height = 15;
+    gameTable.width = 18;
+    gameTable.height = 18;
     gameTable.initialize();
 
     tableSelecter.viewTableIdentifier = gameTable.identifier;
@@ -408,89 +408,33 @@ export class TabletopActionService {
     fileContext = ImageFile.createEmpty('testCharacter_1_image').toContext();
     fileContext.url = './assets/images/mon_052.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.location.x = 5 * 50;
-    testCharacter.location.y = 9 * 50;
+    testCharacter.location.x = 5.5 * 50;
+    testCharacter.location.y = 9.5 * 50;
     testCharacter.initialize();
-    ImageTag.create(testFile.identifier).tag = 'モンスター';    //本家PR #92より
+    ImageTag.create(testFile.identifier).tag = 'モンスター';
 
-    testCharacter.createTestGameDataElement('モンスターA', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ1', '防+1', 3);
+    testCharacter.createTestGameDataElementLineResourceA('PC機体A', 1, testFile.identifier);
+    this.addBuffRound( testCharacter, 'ACS障害', 'AP損害10でスタッガー', 1);
     //-------------------------
     testCharacter = new GameCharacter('testCharacter_2');
-    testCharacter.location.x = 8 * 50;
-    testCharacter.location.y = 8 * 50;
+    testCharacter.location.x = 7.5 * 50;
+    testCharacter.location.y = 7.5 * 50;
     testCharacter.initialize();
-    testCharacter.createTestGameDataElement('モンスターB', 1, testFile.identifier);
+    testCharacter.createTestGameDataElementLineResourceA('PC機体B', 1, testFile.identifier);
 
     //-------------------------
     testCharacter = new GameCharacter('testCharacter_3');
     fileContext = ImageFile.createEmpty('testCharacter_3_image').toContext();
     fileContext.url = './assets/images/mon_128.gif';
     testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.location.x = 4 * 50;
-    testCharacter.location.y = 2 * 50;
+    testCharacter.location.x = 5 * 50;
+    testCharacter.location.y = 3 * 50;
     testCharacter.initialize();
 
     testFile = ImageStorage.instance.add(fileContext);
     ImageTag.create(testFile.identifier).tag = 'モンスター'; //本家PR #92より
-    testCharacter.createTestGameDataElement('モンスターC', 3, testFile.identifier);
+    testCharacter.createTestGameDataElementLineResourceB('手番持ちエネミー', 2, testFile.identifier);
     //-------------------------
-
-    testCharacter = new GameCharacter('testCharacter_4');
-    fileContext = ImageFile.createEmpty('testCharacter_4_image').toContext();
-    fileContext.url = './assets/images/mon_150.gif';
-//本家PR #92より
-//    fileContext.tag = 'テスト01';
-
-    testFile = ImageStorage.instance.add(fileContext);
-    
-    ImageTag.create(testFile.identifier).tag = '';//本家PR #92より
-    testCharacter.location.x = 6 * 50;
-    testCharacter.location.y = 11 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターA', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ2', '攻撃+10', 1);
-    //-------------------------
-    testCharacter = new GameCharacter('testCharacter_5');
-    fileContext = ImageFile.createEmpty('testCharacter_5_image').toContext();
-    fileContext.url = './assets/images/mon_211.gif';
-    testFile = ImageStorage.instance.add(fileContext);
-    testCharacter.location.x = 12 * 50;
-    testCharacter.location.y = 12 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターB', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ2', '攻撃+10', 1);
-
-    //-------------------------
-
-    testCharacter = new GameCharacter('testCharacter_6');
-    fileContext = ImageFile.createEmpty('testCharacter_6_image').toContext();
-    fileContext.url = './assets/images/mon_135.gif';
-    testFile = ImageStorage.instance.add(fileContext);
-    
-    ImageTag.create(testFile.identifier).tag = '';//本家PR #92より
-
-    testCharacter.initialize();
-    testCharacter.location.x = 5 * 50;
-    testCharacter.location.y = 13 * 50;
-    testCharacter.initialize();
-    testCharacter.createTestGameDataElement('キャラクターC', 1, testFile.identifier);
-    this.addBuffRound( testCharacter, 'テストバフ3', '', 3);
-
-    //-------------------------
-
-    testCharacter = new GameCharacter('testCharacter_7');
-    fileContext = ImageFile.createEmpty('testCharacter_7_image').toContext();
-    fileContext.url = './assets/images/ninja.png';
-    testFile = ImageStorage.instance.add(fileContext);
-
-    ImageTag.create(testFile.identifier).tag = '';//本家PR #92より
-
-    testCharacter.initialize();
-    testCharacter.location.x = 10 * 50;
-    testCharacter.location.y = 5 * 50;
-    testCharacter.createTestGameDataElementCheckTable('忍者A', 1, testFile.identifier);
-
   }
 
   makeDefaultContextMenuActions(position: PointerCoordinate): ContextMenuAction[] {
@@ -562,6 +506,13 @@ export class TabletopActionService {
       { menuName: 'D20', diceName: 'D20', type: DiceType.D20, imagePathPrefix: '20_dice' },
     ];
     let subMenus: ContextMenuAction[] = [];
+
+    subMenus.push({
+      name: 'ENダイス(AC6)', action: () => {
+        this.createDiceSymbol(position, 'EN', DiceType.D6, '6_dice', true);
+        SoundEffect.play(PresetSound.diceRoll1);
+      }
+    });
 
     dices.forEach(item => {
       subMenus.push({

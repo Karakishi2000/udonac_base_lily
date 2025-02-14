@@ -1,3 +1,6 @@
+backend:
+  mode: skyway2023
+  url: https://localhost:4200/
 webrtc:
   key: aaaaaaaa-bbbb-ccccc-dddd-eeeeeeeeeeee  #Your SkyWay API key
   config: #未使用

@@ -48,6 +48,18 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
   get currentValue(): number | string { return this._currentValue; }
   set currentValue(currentValue: number | string) { this._currentValue = currentValue; this.setUpdateTimer(); }
 
+  private _step: number = 1;
+  get step(): number { return this._step; }
+  set step(step: number) { this._step = step; this.setUpdateTimer(); }
+
+  private _currentLineValue: number = 0;
+  get currentLineValue(): number { return this._currentLineValue; }
+  set currentLineValue(currentLineValue: number) { this._currentLineValue = currentLineValue; this.setUpdateTimer(); }
+  
+  private _maxLineValue: number = 0;
+  get maxLineValue(): number { return this._maxLineValue; }
+  set maxLineValue(maxLineValue: number) { this._maxLineValue = maxLineValue; this.setUpdateTimer(); }
+  
   private updateTimer: NodeJS.Timer = null;
 
   constructor(
@@ -158,6 +170,9 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
     this._name = object.name;
     this._currentValue = object.currentValue;
     this._value = object.value;
+    this._step = object.step;
+    this._currentLineValue = object.currentLineValue;
+    this._maxLineValue = object.maxLineValue;
   }
 
   private setUpdateTimer() {
@@ -166,6 +181,9 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
       if (this.gameDataElement.name !== this.name) this.gameDataElement.name = this.name;
       if (this.gameDataElement.currentValue !== this.currentValue) this.gameDataElement.currentValue = this.currentValue;
       if (this.gameDataElement.value !== this.value) this.gameDataElement.value = this.value;
+      if (this.gameDataElement.step !== this.step) this.gameDataElement.step = this.step;
+      if (this.gameDataElement.currentLineValue !== this.currentLineValue) this.gameDataElement.currentLineValue = this.currentLineValue;
+      if (this.gameDataElement.maxLineValue !== this.maxLineValue) this.gameDataElement.maxLineValue = this.maxLineValue;
       this.updateTimer = null;
     }, 66);
   }
@@ -197,6 +215,12 @@ export class GameDataElementComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
+  isEditLineTrigger( dataElmIdentifier) {
+    let box = <HTMLInputElement>document.getElementById(dataElmIdentifier);
+    if( !box )return false;
+    return box.checked;
+  }
+  
   isEditMarkDown( dataElmIdentifier) {
     let box = <HTMLInputElement>document.getElementById(dataElmIdentifier);
     if( !box )return false;

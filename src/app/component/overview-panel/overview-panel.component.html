@@ -233,14 +233,34 @@
         <div class="value">
           <div style="display: inline-block; width: min-content;">
             <div class="hidden-spacer" style="margin-right: 2em;">{{dataElm.currentValue}}</div>
-            <input class="input is-caret" type="number" [style]="'color:' + dataElm.nowValueColor +';'" size="1" [(ngModel)]="dataElm.currentValue" />
+            <input class="input is-caret" type="number" [style]="'color:' + dataElm.nowValueColor +';'" size="1" step="{{dataElm.step}}" [(ngModel)]="dataElm.currentValue" />
           </div>
           <div style="display: inline;"> / {{dataElm.value}}</div>
         </div>
         <div class="section" style="line-height: 1em;">
           <input type="range"
             [style]="'font-size: 0.8em; width: 100%; --min: 0; --max:' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
-            min="0" max="{{dataElm.value}}" [(ngModel)]="dataElm.currentValue" />
+            min="0" max="{{dataElm.value}}" step="{{dataElm.step}}" [(ngModel)]="dataElm.currentValue" />
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'lineResource'">
+        <div class="tag">{{dataElm.name}}</div>
+        <div class="value">
+          <div style="display: inline-block; width: min-content;">
+            <div class="hidden-spacer">{{dataElm.currentValue}}</div>
+            <input class="input is-caret" type="number" [style]="'color:' + dataElm.nowValueColor +';'" size="1" [(ngModel)]="dataElm.currentValue" />
+          </div>
+          <div style="display: inline;"> / {{dataElm.value}}</div>
+          <div style="display: inline-block; width: min-content; margin-left: 0.5em">
+            <div class="hidden-spacer">{{dataElm.currentLineValue}}</div>
+            <input class="input is-caret" type="number" [style]="'color:' + dataElm.nowValueColor +';'" size="1" [(ngModel)]="dataElm.currentLineValue" />
+          </div>
+          <div style="display: inline;"> / {{dataElm.maxLineValue}}</div>
+        </div>
+        <div class="section" style="line-height: 1em;">
+          <input type="range"
+            [style]="'font-size: 0.8em; width: 100%; --min: 0; --max:' + dataElm.value + '; --val:' + dataElm.currentValue +';' | safe: 'style'"
+            min="0" max="{{dataElm.value}}" step="{{dataElm.step}}" [(ngModel)]="dataElm.currentValue" />
         </div>
       </ng-container>
       <ng-container *ngSwitchDefault>

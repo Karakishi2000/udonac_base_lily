@@ -8,6 +8,11 @@ export class DataElement extends ObjectNode {
   @SyncVar() name: string;
   @SyncVar() type: string;
   @SyncVar() currentValue: number | string;
+  
+  @SyncVar() step: number;
+  
+  @SyncVar() currentLineValue: number;
+  @SyncVar() maxLineValue: number;
 
   get isNumberResource(): boolean { return this.type != null && this.type === 'numberResource'; }
   get isNote(): boolean { return this.type != null && this.type === 'note'; }
@@ -58,6 +63,17 @@ export class DataElement extends ObjectNode {
       }
     }
     return null;
+  }
+  
+  getElementsByRegExp(re: RegExp): DataElement[] {
+    let children: DataElement[] = [];
+    for (let child of this.children) {
+      if (child instanceof DataElement) {
+        if (re.test(child.getAttribute('name'))) children.push(child);
+        Array.prototype.push.apply(children, child.getElementsByRegExp(re));
+      }
+    }
+    return children;
   }
 
   get myIdentifer(){

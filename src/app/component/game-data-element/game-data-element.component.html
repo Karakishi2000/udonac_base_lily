@@ -8,6 +8,7 @@
         <select (change)="setElementType($event.target.value)" [ngModel]="gameDataElement.type">
           <option value="">通常</option>
           <option value="numberResource">リソース</option>
+          <option value="lineResource">Lineリソース</option>
           <option value="note">ノート</option>
           <option value="markdown">チェック/表</option>
           <option value="check">単一チェック</option>
@@ -40,11 +41,38 @@
       <ng-container [ngSwitch]="gameDataElement.type">
         <ng-container *ngSwitchCase="'numberResource'">
           <input [style]="'font-size: 1.0em; min-width: 90px; width: 90%; --min: 0; --max: ' + value + '; --val:' + currentValue +';' | safe: 'style'"
-            [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" />
+            [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" step="{{step}}" />
           <br>
-          <input class="is-caret" style="width: 5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue" placeholder="Value" />
+          <input class="is-caret" style="width: 5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue" placeholder="Value" step="{{step}}" />
           /
-          <input class="is-caret" style="width: 5em;" size="1" type="number" [(ngModel)]="value" placeholder="Value" />
+          <input class="is-caret" style="width: 5em;" size="1" type="number" [(ngModel)]="value" placeholder="Value" step="{{step}}" />
+          <span style="font-family: Cambria, Georgia; font-size: 0.9rem;">Step</span>
+          <input class="is-caret" style="width: 3em; text-align: right;" size="1" type="number" min="1" [(ngModel)]="step" placeholder="1" />
+        </ng-container>
+        <ng-container *ngSwitchCase="'lineResource'">
+          <input [style]="'font-size: 1.0em; min-width: 90px; width: 90%; --min: 0; --max: ' + value + '; --val:' + currentValue +';' | safe: 'style'"
+            [(ngModel)]="currentValue" type="range" min="0" max="{{value}}" step="{{step}}" />
+          <br>
+          <input class="is-caret" style="width: 3.5em; text-align: right;" size="1" type="number" [(ngModel)]="currentValue" placeholder="Value" step="{{step}}" />
+          /
+          <input class="is-caret" style="width: 3.5em;" size="1" type="number" [(ngModel)]="value" placeholder="Value" step="{{step}}" />
+          <span style="font-family: Cambria, Georgia; font-size: 0.9rem; margin-right: 0.5em">Line</span>
+          <input class="is-caret" style="width: 3.5em; text-align: right;" size="1" type="number" [(ngModel)]="currentLineValue" placeholder="Value" />
+          /
+          <input class="is-caret" style="width: 3.5em;" size="1" type="number" value="1" [(ngModel)]="maxLineValue" placeholder="Value" />
+          <span style="font-family: Cambria, Georgia; font-size: 0.9rem;">Step</span>
+          <input class="is-caret" style="width: 3em; text-align: right;" size="1" type="number" min="1" [(ngModel)]="step" placeholder="1" />
+<!-- イベント処理を理解できるまで保留
+          <span style="font-size: 0.8em;">
+            トリガー:<input id = "{{gameDataElement.myIdentifer +'_elm'}}" type="checkbox" (change)="changeChk()"/>
+          </span>
+          <div [hidden]="!isEditLineTrigger(gameDataElement.myIdentifer + '_elm')" style="width:100%;min-width:50px;">
+            <div style="font-family: Cambria, Georgia; font-size: 0.9rem;">1Line全損時（Line > 1で値0以下）:</div>
+            <input class="is-caret" style="width: 90%; margin-left: 1em;" size="1" type="text" [(ngModel)]="step" placeholder="チャットパレット構文" />
+            <div style="font-family: Cambria, Georgia; font-size: 0.9rem;">全Line全損時（Line = 1で値0以下）:</div>
+            <input class="is-caret" style="width: 90%; margin-left: 1em;" size="1" type="text" [(ngModel)]="step" placeholder="チャットパレット構文" />
+          </div>
+-->
         </ng-container>
         <ng-container *ngSwitchCase="'note'">
           <span [hidden]="!isUrlText(value)" style="font-size: 0.8em;">

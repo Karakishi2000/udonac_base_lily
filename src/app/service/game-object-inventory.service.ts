@@ -197,7 +197,15 @@ class ObjectInventory {
       let caches = this.tabletopObjects;
       for (let object of caches) {
         if (!object.rootDataElement) continue;
-        let elements = this.dataTags.map(tag => tag === this.newLineString ? this.newLineDataElement : object.rootDataElement.getFirstElementByName(tag));
+        let elements: DataElement[] = [];
+        this.dataTags.forEach(tag => {
+          if(tag.includes('*') || tag.includes('?')){
+            const re = new RegExp(`^${tag.replace(/\*/g, ".*").replace(/\?/g, ".")}$`);
+            elements = elements.concat(object.rootDataElement.getElementsByRegExp(re));
+          }else{
+            elements.push(tag === this.newLineString ? this.newLineDataElement : object.rootDataElement.getFirstElementByName(tag));
+          }
+        });
         this._dataElementMap.set(object.identifier, elements);
       }
       this.needsRefreshElements = false;
