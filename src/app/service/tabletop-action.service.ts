@@ -208,6 +208,7 @@ export class TabletopActionService {
     gameTable.imageIdentifier = testBgFile.identifier;
     gameTable.width = 18;
     gameTable.height = 18;
+    gameTable.gridColor = '#00000080';
     gameTable.initialize();
 
     tableSelecter.viewTableIdentifier = gameTable.identifier;
